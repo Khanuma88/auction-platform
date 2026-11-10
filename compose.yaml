@@ -1,0 +1,36 @@
+# Start the database:            docker compose up -d
+# Start database + application:  docker compose --profile app up --build
+services:
+  db:
+    image: postgres:17
+    container_name: auction-db
+    environment:
+      POSTGRES_DB: auction
+      POSTGRES_USER: auction
+      POSTGRES_PASSWORD: auction
+    ports:
+      - "5434:5432"
+    volumes:
+      - auction-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auction -d auction"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    profiles: ["app"]
+    build: .
+    container_name: auction-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/auction
+      DB_USER: auction
+      DB_PASSWORD: auction
+    ports:
+      - "8080:8080"
+
+volumes:
+  auction-data:
