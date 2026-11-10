@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Online Auction Platform</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 48px auto; padding: 0 16px; color: #1f2328; }
+        h1 { margin-bottom: 4px; }
+        .muted { color: #59636e; }
+        table { border-collapse: collapse; width: 100%; margin-top: 24px; }
+        td { border-bottom: 1px solid #d1d9e0; padding: 10px 8px; vertical-align: top; }
+        td:first-child { font-weight: 600; width: 40%; }
+        .ok { color: #1a7f37; font-weight: 600; }
+    </style>
+</head>
+<body>
+<h1>Online Auction Platform</h1>
+<p class="muted">P34 · Milestone M1 — empty project running with PostgreSQL in Docker</p>
+
+<table>
+    <tr><td>Application</td><td class="ok">Running</td></tr>
+    <tr><td>Database</td><td th:text="${status.databaseVersion}">PostgreSQL</td></tr>
+    <tr><td>Flyway migrations applied</td><td th:text="${status.appliedMigrations}">0</td></tr>
+    <tr><td>Seeded categories</td><td th:text="${status.categoryCount}">0</td></tr>
+    <tr><td>Health endpoint</td><td><a href="/actuator/health">/actuator/health</a></td></tr>
+</table>
+</body>
+</html>
